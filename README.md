@@ -1,2 +1,3 @@
 # TentacleTech-Project-LoanApp
-This repository is for maintain/update the Project-LoanApp code and logic.
+In This repository, The master branch is for edit/update the Project-LoanApp code and logic.
+Then after all logic is done, the master is merge with main.
