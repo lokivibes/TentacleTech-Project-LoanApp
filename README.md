@@ -1,3 +1,5 @@
 # TentacleTech-Project-LoanApp
-This repository is for maintain/update the Project-LoanApp code and logic.
-use this repository and pull / push your codes.
+Don't use or disturb this main branch.
+please use the master branch.
+This main branch for This repository has the code of final project.
+
