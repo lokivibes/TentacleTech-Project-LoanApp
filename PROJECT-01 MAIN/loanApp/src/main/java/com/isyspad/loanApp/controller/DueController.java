@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/due")
 public class DueController {
     @Autowired
     DueServices dueServices;
