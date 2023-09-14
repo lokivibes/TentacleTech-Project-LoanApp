@@ -9,7 +9,9 @@ public interface ExpenseService {
 
     ExpenseResponse createexpense(ExpenseRequest input);
 
-    List<ExpenseResponse> findvalue(String userId, Float expenseAmount);
+    List<ExpenseResponse> findvalue(String userId, Float expenseAmount, String billNumber);
+
+
 
     ExpenseResponse updateExpense( ExpenseRequest update);
 }

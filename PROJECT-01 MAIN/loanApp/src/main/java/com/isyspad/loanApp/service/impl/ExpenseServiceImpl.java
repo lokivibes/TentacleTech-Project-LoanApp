@@ -13,11 +13,9 @@ import java.util.*;
 @Service
 public class ExpenseServiceImpl implements ExpenseService {
 
+
     @Autowired
     ExpenseRepository repository;
-
-    Set<String> isbillNumberuniquepresent = new HashSet<>();
-
     public EntityExp setrequest(ExpenseRequest request) {
         EntityExp entityExp = new EntityExp();
         EntityExp lastSavedEntity = repository.findLastSavedEntity();
@@ -81,7 +79,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public List<ExpenseResponse> findvalue(String userId, Float expenseAmount) {
+    public List<ExpenseResponse> findvalue(String userId, Float expenseAmount,String billNumber) {
 
         List<EntityExp> list = new ArrayList<>();
 
@@ -89,7 +87,9 @@ public class ExpenseServiceImpl implements ExpenseService {
             list = repository.findByUserId(userId);
         } else if (expenseAmount != null) {
             list = repository.findByexpenseAmount(expenseAmount); // Assuming this is the correct method name
-        } else {
+        } else if (billNumber!=null){
+            list = repository.findBybillNumber(billNumber);
+        }else {
             throw new IllegalArgumentException("Invalid input parameters");
         }
 
@@ -97,17 +97,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
         if (list != null && !list.isEmpty()) {
             for (EntityExp entityExp : list) {
-                ExpenseResponse expenseResponse = new ExpenseResponse();
-                expenseResponse.setId(entityExp.getId());
-                expenseResponse.setBillNumber(entityExp.getBillNumber());
-                expenseResponse.setExpenseDate(entityExp.getExpenseDate());
-                expenseResponse.setExpenseDescription(entityExp.getExpenseDescription());
-                expenseResponse.setExpenseAmonut(entityExp.getExpenseAmount());
-                expenseResponse.setRemainingBalance(entityExp.getRemainingBalance());
-                expenseResponse.setTotalAmount(entityExp.getTotalAmount());
-                expenseResponse.setUserId(entityExp.getUserId());
-                expenseResponse.setTotalExpenseAmount(entityExp.getTotalExpenseAmount());
-                responses.add(expenseResponse); // Add the response to the list
+                responses.add(setResponse(entityExp));
             }
         } else {
             throw new NoSuchElementException("No matching records found");
@@ -122,7 +112,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         if (expenseRequest != null) {
             int count = repository.countbillNumber(expenseRequest.getBillNumber());
             if (count == 0) {
-                EntityExp entityExp = repository.getReferenceById(expenseRequest.getId());
+                EntityExp entityExp = repository.findById(expenseRequest.getId()).get();
                 entityExp.setExpenseDescription(expenseRequest.getExpenseDescription());
                 entityExp.setBillNumber(expenseRequest.getBillNumber());
 
@@ -132,8 +122,6 @@ public class ExpenseServiceImpl implements ExpenseService {
             } else {
                 throw new NumberFormatException();
             }
-
-
         }
         return null;
     }
