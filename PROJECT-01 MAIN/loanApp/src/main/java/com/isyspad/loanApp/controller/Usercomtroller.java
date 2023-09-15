@@ -14,28 +14,18 @@ public class Usercomtroller {
 
 @PostMapping(path = "bankuser")
     public String createuser(@RequestBody Usermodel data){
-
-
-        return user.userdata(data);
+    return user.userdata(data);
     }
     @PutMapping(path = "update")
 
     public String updateuser(@RequestBody Usermodel model){
-
-        return  user.update(model);
-
-    }
+    return  user.update(model);
+}
 
     @GetMapping(path = "get/{id}")
-
-
     public User finduser(@PathVariable Long id,String username)  {
-
-        return user.find(id);
-
-
-    }
-
+    return user.find(id);
+}
 }
 
 

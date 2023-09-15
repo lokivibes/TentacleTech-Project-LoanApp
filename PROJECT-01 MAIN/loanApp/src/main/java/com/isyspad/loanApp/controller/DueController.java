@@ -26,8 +26,8 @@ public class DueController {
         DueCollectioent controlRespo= dueServices.serviceMethod(controlResult.get(1));
 
         return new ResponseEntity<>(controlRespo, HttpStatus.CREATED);
-
     }
+
     //saran -update
    @PutMapping(path = "updated")
    public ResponseEntity<DueModel> updatedues (@RequestBody DueModel dueModel){
@@ -48,9 +48,6 @@ public class DueController {
         List<DueCollectioent> total = new ArrayList<>();
         total.addAll(getDate);
         total.addAll(forstatus);
-
-
-
         return ResponseEntity.ok(total);
-
-}}
+    }
+}

@@ -1,6 +1,6 @@
 package com.isyspad.loanApp.repository;
 
-import com.isyspad.loanApp.entity.EntityExp;
+import com.isyspad.loanApp.entity.Expense;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -8,20 +8,20 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ExpenseRepository extends JpaRepository<EntityExp,Long> {
+public interface ExpenseRepository extends JpaRepository<Expense,Long> {
 
-    @Query("SELECT e FROM EntityExp e WHERE e.id = (SELECT MAX(id) FROM EntityExp)")
-    EntityExp findLastSavedEntity();
+    @Query("SELECT e FROM Expense e WHERE e.id = (SELECT MAX(id) FROM Expense)")
+    Expense findLastSavedEntity();
 
-    @Query(value = "SELECT COUNT(*) FROM EntityExp WHERE billNumber = ?1")
+    @Query(value = "SELECT COUNT(*) FROM Expense WHERE billNumber = ?1")
     int countbillNumber(String billNumber);
 
 
-    List<EntityExp> findByexpenseAmount(Float expenseAmount);
+    List<Expense> findByexpenseAmount(Float expenseAmount);
 
-    List<EntityExp> findBybillNumber(String billNumber);
+    List<Expense> findBybillNumber(String billNumber);
 
-    List<EntityExp> findByUserId(String userId);
+    List<Expense> findByUserId(String userId);
 
 
 

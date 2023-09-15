@@ -21,12 +21,11 @@ public class ExpenseController {
     public ResponseEntity<ExpenseResponse> tableCreation(@RequestBody ExpenseRequest values){
         ExpenseResponse response = expenseService.createexpense(values);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
-
     }
 
     @GetMapping("/expensefind")
-    public ResponseEntity <List<ExpenseResponse>> getfind(@RequestParam(required = false)String userId, Float expenseAmount){
-        List<ExpenseResponse> responses= expenseService.findvalue(userId,expenseAmount);
+    public ResponseEntity <List<ExpenseResponse>> getfind(@RequestParam(required = false)String userId,Float expenseAmount,String billNumber){
+        List<ExpenseResponse> responses= expenseService.findvalue(userId,expenseAmount,billNumber);
         return new ResponseEntity<>(responses,HttpStatus.OK);
     }
 
@@ -35,5 +34,4 @@ public class ExpenseController {
         ExpenseResponse expenseResponse=expenseService.updateExpense(expenseRequest);
         return new ResponseEntity<>(expenseResponse,HttpStatus.CREATED);
     }
-
 }

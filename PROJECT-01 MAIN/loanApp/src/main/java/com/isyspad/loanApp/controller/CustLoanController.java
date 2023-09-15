@@ -22,13 +22,11 @@ public class CustLoanController {
 
 //--------------------------------------- LOKKI - UPDATE Customer Table ----------------------------------------------//
 
-    //----- TEST API -----//
     @GetMapping("/test")
     public String testapi() {
         return "Yellaarum vaangaah..! Alwayss Welcomee..!";
     }
 
-    //----- FETCH by unique customer ID  -----//
     @GetMapping("/getid")
     public ResponseEntity<CustomerLoan> getCustomerLoanByCustId(@RequestBody CustomerLoan reqCustId)  {
         String getCustId = reqCustId.getCustid();
@@ -42,7 +40,6 @@ public class CustLoanController {
         }
     }
 
-    //----- UPDATE by unique customer ID through API (After Fetching ID )-----//
     @PutMapping("/update/{custId}")
     public  ResponseEntity<CustomerLoan> updateCustomerByCustId(@PathVariable String custId, @RequestBody CustomerLoan update){
         if(custId.isEmpty())
@@ -55,7 +52,6 @@ public class CustLoanController {
         }
     }
 
-    //----- GET ALL ENTRIES IN DATABASE (For refference) -----//
     @GetMapping("/getall")
        public ResponseEntity<List<CustomerLoan>> getAllCustomer() {
         List<CustomerLoan> customers = null;
@@ -68,7 +64,6 @@ public class CustLoanController {
         return new ResponseEntity<List<CustomerLoan>>(customers,HttpStatus.OK);
     }
 
-    //----- DELETE by unique customer ID (For refference) -----//
     @DeleteMapping("/delete/{custId}")
     public ResponseEntity<Void> deleteCustomer(@RequestBody CustomerLoan reqcustId)  {
         String deleteCustId = reqcustId.getCustid();
@@ -86,7 +81,6 @@ public class CustLoanController {
 
 //------------------------------------- GOKULNATH - CREATE Customer Table --------------------------------------------//
 
-    //----- CREATING customer loan details (Auto using ID and loan Id) -----//
     @PostMapping("/create")
     public ResponseEntity<CustomerLoan> createLoan(@RequestBody CustomerLoan cusloan) {
         CustomerLoan savedLoan = custLoanService.saveLoanWithIncrementedID(cusloan);
@@ -97,7 +91,6 @@ public class CustLoanController {
 
 //-------------------------------------- KANMANI - Customer Table Find  ---------------------------------------------//
 
-    //----- FINDING customer loan details by using customer ID and Loan ID -----//
     @GetMapping("/find")
     public ResponseEntity<List<CustomerLoan>> getLoanByCustloan(@RequestBody CustomerLoan request) {
 

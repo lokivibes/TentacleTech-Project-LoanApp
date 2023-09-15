@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Table(name = "ExpenseTrackerTable")
 @javax.persistence.Entity
-public class EntityExp {
+public class Expense {
 
     @Id
     @Column

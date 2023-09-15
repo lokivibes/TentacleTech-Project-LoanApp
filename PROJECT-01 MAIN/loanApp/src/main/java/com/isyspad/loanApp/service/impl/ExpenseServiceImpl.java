@@ -1,6 +1,6 @@
 package com.isyspad.loanApp.service.impl;
 
-import com.isyspad.loanApp.entity.EntityExp;
+import com.isyspad.loanApp.entity.Expense;
 import com.isyspad.loanApp.model.ExpenseRequest;
 import com.isyspad.loanApp.model.ExpenseResponse;
 import com.isyspad.loanApp.repository.ExpenseRepository;
@@ -16,28 +16,28 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Autowired
     ExpenseRepository repository;
-    public EntityExp setrequest(ExpenseRequest request) {
-        EntityExp entityExp = new EntityExp();
-        EntityExp lastSavedEntity = repository.findLastSavedEntity();
+    public Expense setrequest(ExpenseRequest request) {
+        Expense expense = new Expense();
+        Expense lastSavedEntity = repository.findLastSavedEntity();
         Float currentExpenseAmount = request.getExpenseAmount();
         Float totalExpenseAmount = (lastSavedEntity != null) ? lastSavedEntity.getTotalExpenseAmount() : 0;
         totalExpenseAmount = totalExpenseAmount + currentExpenseAmount;
         Float newRemainingBalance = request.getTotalAmount() - totalExpenseAmount;
 
 
-        entityExp.setBillNumber(request.getBillNumber());
-        entityExp.setExpenseDate(request.getExpenseDate());
-        entityExp.setTotalExpenseAmount(totalExpenseAmount);
-        entityExp.setTotalAmount(request.getTotalAmount());
-        entityExp.setId(request.getId());
-        entityExp.setRemainingBalance(newRemainingBalance);
-        entityExp.setExpenseDescription(request.getExpenseDescription());
-        entityExp.setExpenseAmount(request.getExpenseAmount());
-        entityExp.setUserId(request.getUserId());
-        return entityExp;
+        expense.setBillNumber(request.getBillNumber());
+        expense.setExpenseDate(request.getExpenseDate());
+        expense.setTotalExpenseAmount(totalExpenseAmount);
+        expense.setTotalAmount(request.getTotalAmount());
+        expense.setId(request.getId());
+        expense.setRemainingBalance(newRemainingBalance);
+        expense.setExpenseDescription(request.getExpenseDescription());
+        expense.setExpenseAmount(request.getExpenseAmount());
+        expense.setUserId(request.getUserId());
+        return expense;
     }
 
-    public ExpenseResponse setResponse(EntityExp entity) {
+    public ExpenseResponse setResponse(Expense entity) {
         ExpenseResponse response = new ExpenseResponse();
         response.setId(entity.getId());
         response.setTotalExpenseAmount(entity.getTotalExpenseAmount());
@@ -53,12 +53,12 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public ExpenseResponse createexpense(ExpenseRequest input) {
-        EntityExp entityExp;
+        Expense expense;
         if (basicvalidation(input)) {
 
-            entityExp = setrequest(input);
-            entityExp = repository.save(entityExp);
-            return setResponse(entityExp);
+            expense = setrequest(input);
+            expense = repository.save(expense);
+            return setResponse(expense);
 
         } else {
             throw new NullPointerException();
@@ -81,7 +81,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public List<ExpenseResponse> findvalue(String userId, Float expenseAmount,String billNumber) {
 
-        List<EntityExp> list = new ArrayList<>();
+        List<Expense> list = new ArrayList<>();
 
         if (userId != null) {
             list = repository.findByUserId(userId);
@@ -96,8 +96,8 @@ public class ExpenseServiceImpl implements ExpenseService {
         List<ExpenseResponse> responses = new ArrayList<>();
 
         if (list != null && !list.isEmpty()) {
-            for (EntityExp entityExp : list) {
-                responses.add(setResponse(entityExp));
+            for (Expense expense : list) {
+                responses.add(setResponse(expense));
             }
         } else {
             throw new NoSuchElementException("No matching records found");
@@ -112,13 +112,13 @@ public class ExpenseServiceImpl implements ExpenseService {
         if (expenseRequest != null) {
             int count = repository.countbillNumber(expenseRequest.getBillNumber());
             if (count == 0) {
-                EntityExp entityExp = repository.findById(expenseRequest.getId()).get();
-                entityExp.setExpenseDescription(expenseRequest.getExpenseDescription());
-                entityExp.setBillNumber(expenseRequest.getBillNumber());
+                Expense expense = repository.findById(expenseRequest.getId()).get();
+                expense.setExpenseDescription(expenseRequest.getExpenseDescription());
+                expense.setBillNumber(expenseRequest.getBillNumber());
 
-                entityExp = repository.save(entityExp);
+                expense = repository.save(expense);
 
-                return setResponse(entityExp);
+                return setResponse(expense);
             } else {
                 throw new NumberFormatException();
             }

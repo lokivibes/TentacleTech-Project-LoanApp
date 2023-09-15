@@ -6,8 +6,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "customer_loan")
 public class CustomerLoan {
-
  @Id
  @GeneratedValue(strategy = GenerationType.AUTO)
  @Column(name = "id")

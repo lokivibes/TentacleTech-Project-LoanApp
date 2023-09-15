@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/customer")
 public class CustomerDetailsController {
-    //private int currentId = 1;
     @Autowired
     private CustomerDetailsService customerDetailsService;
     @Autowired
@@ -25,7 +24,6 @@ public class CustomerDetailsController {
     @PostMapping("/CustomerDetails")
     public ResponseEntity<CustomerDetailsResponse>createandsave(@RequestBody CustomerDetailsReq customerDetails){
 
-//    CustomerDetailsResponse finalresult = customerDetailsService.createCustId(customerDetails);
     CustomerDetailsResponse finalrespo = customerDetailsService.createCustomer(customerDetails);
     return  new ResponseEntity<>(finalrespo,HttpStatus.CREATED);
 }
